@@ -24,6 +24,8 @@ const ProductSinglePage = () => {
   const product = useSelector(getProductSingle);
   const productSingleStatus = useSelector(getSingleProductStatus);
   const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState("");
+  //product?.images[0]
   const cartMessageStatus = useSelector(getCartMessageStatus);
 
   // getting single product
@@ -37,7 +39,7 @@ const ProductSinglePage = () => {
     }
   }, [cartMessageStatus, dispatch, id]);
 
-  let discountedPrice =
+  const discountedPrice =
     product?.price - product?.price * (product?.discountPercentage / 100);
   if (productSingleStatus === STATUS.LOADING) {
     return <Loader />;
@@ -60,7 +62,7 @@ const ProductSinglePage = () => {
   };
 
   const addToCartHandler = (product) => {
-    let discountedPrice =
+    const discountedPrice =
       product?.price - product?.price * (product?.discountPercentage / 100);
     let totalPrice = quantity * discountedPrice;
 
@@ -68,6 +70,10 @@ const ProductSinglePage = () => {
       addToCart({ ...product, quantity: quantity, totalPrice, discountedPrice })
     );
     dispatch(setCartMessageOn(true));
+  };
+
+  const changeBorderColor = (image) => {
+    setSelectedImage(image);
   };
 
   return (
@@ -80,7 +86,8 @@ const ProductSinglePage = () => {
                 <div className="product-img-zoom">
                   <img
                     src={
-                      product ? (product.images ? product.images[0] : "") : ""
+                      selectedImage ||
+                      (product?.images?.length ? product?.images[0] : "")
                     }
                     alt=""
                     className="img-cover"
@@ -88,42 +95,18 @@ const ProductSinglePage = () => {
                 </div>
 
                 <div className="product-img-thumbs flex align-center my-2">
-                  <div className="thumb-item">
-                    <img
-                      src={
-                        product ? (product.images ? product.images[1] : "") : ""
-                      }
-                      alt=""
-                      className="img-cover"
-                    />
-                  </div>
-                  <div className="thumb-item">
-                    <img
-                      src={
-                        product ? (product.images ? product.images[2] : "") : ""
-                      }
-                      alt=""
-                      className="img-cover"
-                    />
-                  </div>
-                  <div className="thumb-item">
-                    <img
-                      src={
-                        product ? (product.images ? product.images[3] : "") : ""
-                      }
-                      alt=""
-                      className="img-cover"
-                    />
-                  </div>
-                  <div className="thumb-item">
-                    <img
-                      src={
-                        product ? (product.images ? product.images[4] : "") : ""
-                      }
-                      alt=""
-                      className="img-cover"
-                    />
-                  </div>
+                  {product &&
+                    product.images &&
+                    product.images.map((image) => (
+                      <div className="thumb-item" key={image}>
+                        <img
+                          src={image ?? ""}
+                          alt=""
+                          className="img-cover"
+                          onMouseOver={() => changeBorderColor(image)}
+                        />
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>

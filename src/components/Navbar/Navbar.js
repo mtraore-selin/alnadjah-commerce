@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setSidebarOn } from "../../store/sidebarSlice";
 import { getAllCategories } from "../../store/categorySlice";
@@ -12,6 +12,7 @@ import {
 import CartModal from "../CartModal/CartModal";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const categories = useSelector(getAllCategories);
   const carts = useSelector(getAllCarts);
@@ -21,6 +22,10 @@ const Navbar = () => {
   const handleSearchTerm = (e) => {
     e.preventDefault();
     setSearchTerm(e.target.value);
+  };
+
+  const handleSearchTermChange = () => {
+    searchTerm && searchTerm.trim() && navigate(`search/${searchTerm}`);
   };
 
   useEffect(() => {
@@ -55,14 +60,14 @@ const Navbar = () => {
                 type="text"
                 className="form-control fs-14"
                 placeholder="Search your preferred items here"
-                onChange={(e) => handleSearchTerm(e)}
+                onChange={handleSearchTerm}
               />
-              <Link
-                to={`search/${searchTerm}`}
-                className="text-white search-btn flex align-center justify-center"
+              <button
+                onClick={handleSearchTermChange}
+                className="btn text-white search-btn flex align-center justify-center"
               >
                 <i className="fa-solid fa-magnifying-glass"></i>
-              </Link>
+              </button>
             </div>
           </div>
 

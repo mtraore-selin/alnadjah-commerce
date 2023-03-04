@@ -20,10 +20,12 @@ const SearchPage = () => {
 
   useEffect(() => {
     dispatch(clearSearch());
-    dispatch(fetchAsyncSearchProduct(searchTerm));
+    searchTerm &&
+      searchTerm.trim() &&
+      dispatch(fetchAsyncSearchProduct(searchTerm));
   }, [dispatch, searchTerm]);
 
-  if (searchProducts.length === 0) {
+  if (!searchProducts.length && searchProductsStatus === STATUS.SUCCEEDED) {
     return (
       <div
         className="container"
