@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CartPage.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { shopping_cart } from "../../utils/images";
@@ -10,11 +10,13 @@ import {
   toggleCartQty,
   clearCart,
 } from "../../store/cartSlice";
+import CheckoutContainer from "../Checkout/CheckoutContainer";
 
 const CartPage = () => {
   const dispatch = useDispatch();
   const carts = useSelector(getAllCarts);
   const { itemsCount, totalAmount } = useSelector((state) => state.cart);
+  const [toggle, setToggle] = useState(false);
 
   if (carts.length === 0) {
     return (
@@ -147,11 +149,13 @@ const CartPage = () => {
               <button
                 type="button"
                 className="checkout-btn text-white bg-orange fs-16"
+                onClick={() => setToggle((previous) => !previous)}
               >
                 Check Out
               </button>
             </div>
           </div>
+          {toggle && <CheckoutContainer />}
         </div>
       </div>
     </div>

@@ -15,6 +15,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Footer from "./components/Footer/Footer";
 import store from "./store/store";
 import { Provider } from "react-redux";
+import StripeContainer from "./pages/Checkout/StripeContainer";
 
 function App() {
   return (
@@ -35,6 +36,8 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             {/* searched products */}
             <Route path="/search/:searchTerm" element={<Search />} />
+            {/* ordered products */}
+            <Route path="/checkout" element={<StripeContainer />} />
           </Routes>
 
           <Footer />
