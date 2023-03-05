@@ -3,6 +3,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../../store/cartSlice";
+import { STRIPE_API_URL } from "../../utils/apiURL";
 import Completion from "./Completion";
 
 export default function PaymentForm() {
@@ -26,13 +27,13 @@ export default function PaymentForm() {
         const requestOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount: totalAmount.toFixed(0), id }),
+          body: JSON.stringify({
+            amount: Number(totalAmount) * 1000,
+            id,
+          }),
         };
 
-        const response = await fetch(
-          "http://localhost:5252/payment",
-          requestOptions
-        );
+        const response = await fetch(STRIPE_API_URL, requestOptions);
         const data = await response.json();
 
         if (data.success) {

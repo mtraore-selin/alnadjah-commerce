@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ProductSinglePage.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchAsyncProductSingle,
@@ -19,6 +19,7 @@ import {
 import CartMessage from "../../components/CartMessage/CartMessage";
 
 const ProductSinglePage = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
   const product = useSelector(getProductSingle);
@@ -200,7 +201,11 @@ const ProductSinglePage = () => {
                       add to cart
                     </span>
                   </button>
-                  <button type="button" className="buy-now btn mx-3">
+                  <button
+                    type="button"
+                    className="buy-now btn mx-3"
+                    onClick={() => navigate("/cart")}
+                  >
                     <span className="btn-text">buy now</span>
                   </button>
                 </div>

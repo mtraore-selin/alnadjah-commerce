@@ -1,13 +1,13 @@
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import React from "react";
+import { PAYPAL_CLIENT_ID } from "../../utils/constants";
 
 const PayPalContainer = () => {
   return (
     <div className="payment-container">
       <PayPalScriptProvider
         options={{
-          "client-id":
-            "ATcF3MRVgSq7zAnQuKl3SPYnUPD_pAaLPNjTGjo1KMuNwkWGCJmJ7Kq50t-bw25-TbHupA8kB0zzUQ-q",
+          "client-id": PAYPAL_CLIENT_ID,
         }}
       >
         <PayPalButtons
