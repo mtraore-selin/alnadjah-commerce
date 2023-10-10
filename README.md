@@ -98,3 +98,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 https://al-nadjah-commerce.netlify.app/
 
 PAYPAL_CLIENT_ID:ATcF3MRVgSq7zAnQuKl3SPYnUPD_pAaLPNjTGjo1KMuNwkWGCJmJ7Kq50t-bw25-TbHupA8kB0zzUQ-q
+
+
+
+## web --> to mobile os
+pnpm i @capacitor/cli --save-dev
+npx cap init 
+pnpm run build
+pnpm i @capacitor/core @capacitor/ios @capacitor/android 
+npx cap add ios
+npx cap open android
